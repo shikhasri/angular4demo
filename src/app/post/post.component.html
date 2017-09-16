@@ -1,0 +1,61 @@
+<html>
+<head>
+  
+</head>
+
+<body>
+<div class="container-fluid" >
+  <div class="container">
+   <br>   
+<div *ngFor="let posts of allpost">
+<div class="form-group">
+            <div class="navbar-header" >
+                   {{posts.posttime | date}}
+          </div>
+        		  <textarea class="form-control" readonly> {{posts.postcontent}} </textarea>
+             <div class="btn-group">
+                    <button type="button" class="btn" [id]="posts.postid" (click)='likePost($event)'>
+  					           {{posts.likecount==0?'':posts.likecount}}	 Like(s) </button>
+                    <button type="button" class="btn" [id]="'commentof'+posts.postid" (click)='commentPost($event)'>
+  						           {{posts.commentcount==0?'':posts.commentcount}} Comment(s) </button>
+                     <button type="button" class="btn" [id]="'shareon'+posts.postid" (click)='sharePost($event)'>
+                        {{posts.sharecount==0?'':posts.sharecount}} Share(s)	</button>
+              <button type="button" class="btn" (click)='getPostComments()'>
+                {{posts.commentcount==0?'':'view comment(s)'}}</button>
+                         
+             
+              </div> 
+             <div [id]="'commentbox'+posts.postid" [hidden]="true">
+                     <input class="form-control" placeholder="write comment.." [id]="posts.postid" (keydown)='submitComment($event)'/>
+              </div>
+               
+                  <app-comments *ngIf="isComments" [data]="posts.postid"></app-comments>
+                 <hr>
+          </div>
+ </div>
+  </div>
+
+</div> 
+
+<div (click)="childModal.show()">test</div>
+
+<div bsModal #childModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Child modal</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="childModal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        I am a child modal, opened from parent component!
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</body>
+</html>
